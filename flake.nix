@@ -13,14 +13,17 @@
           pname = "stk";
           version = "5.0.1";
 
-          src = fetchFromGitHub {
-            owner = "thestk";
-            repo = "stk";
-            rev = "5.0.1";
-            sha256 = "y84OfOWFdARZApm8VHz4yjl8/7SActNVUHgvSUkwJnw=";
+          src = fetchTarball {
+            url = "http://ccrma.stanford.edu/software/stk/release/stk-5.0.1.tar.gz";
+            sha256 = "0pmp45hj4a4638wz88wxh8d5vhghk779zd3jw7a6b3v8qsa1620m";
           };
 
-          nativeBuildInputs = [ cmake gnumake pkg-config alsa-lib ];
+          nativeBuildInputs = [ cmake gnumake pkg-config alsa-lib jack2 ];
+
+          preBuildPhase = ''
+            cd $out
+            ./configure --with-oss --with-alsa --with-jack
+          '';
 
           meta = {
             description =
