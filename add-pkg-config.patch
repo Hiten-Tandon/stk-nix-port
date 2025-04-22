@@ -35,17 +35,17 @@ index 210c73e..29e8b19 100644
 +)  
 diff --git a/share/pkgconfig/stk.pc.in b/share/pkgconfig/stk.pc.in
 new file mode 100644
-index 0000000..5583031
+index 0000000..95fedf0
 --- /dev/null
 +++ b/share/pkgconfig/stk.pc.in
 @@ -0,0 +1,10 @@
 +prefix=@CMAKE_INSTALL_PREFIX@
 +exec_prefix=${prefix}
-+libdir=${prefix}/${CMAKE_INSTALL_LIBDIR}
-+includedir=${prefix}/${CMAKE_INSTALL_INCLUDEDIR}/stk
++libdir=@CMAKE_INSTALL_FULL_LIBDIR@
++includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@/stk
 +
 +Name: @PROJECT_NAME@
 +Description: @PROJECT_DESCRIPTION@
 +Version: @PROJECT_VERSION@
-+Libs: -L${libdir} -lstk
++Libs: -L${libdir} -l@PROJECT_NAME@
 +Cflags: -I${includedir}
