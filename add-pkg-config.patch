@@ -47,5 +47,5 @@ index 0000000..95fedf0
 +Name: @PROJECT_NAME@
 +Description: @PROJECT_DESCRIPTION@
 +Version: @PROJECT_VERSION@
-+Libs: -L${libdir} -l@PROJECT_NAME@
++Libs: -L${libdir} -lstk
 +Cflags: -I${includedir}
