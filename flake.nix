@@ -18,6 +18,8 @@
             sha256 = "0pmp45hj4a4638wz88wxh8d5vhghk779zd3jw7a6b3v8qsa1620m";
           };
 
+          patches = [ ./add-pkg-config.patch ];
+
           nativeBuildInputs = [ cmake gnumake pkg-config alsa-lib jack2 ];
 
           preBuildPhase = ''

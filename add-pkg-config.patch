@@ -1,0 +1,51 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 210c73e..29e8b19 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,6 +37,7 @@ option(ENABLE_WASAPI "Enable Windows Audio Session API support (windows only)" O
+ option(COMPILE_PROJECTS "Compile all the example projects" ON)
+ option(INSTALL_HEADERS "Install headers" ON)
+ 
++include(GNUInstallDirs)
+ include_directories("./include")
+ file(GLOB STK_SRC "./src/*.cpp") # GLOB instead of GLOB_RECURSE as the asio depends on system
+ 
+@@ -162,7 +163,7 @@ endif()
+ add_definitions(-D_USE_MATH_DEFINES)
+ if(INSTALL_HEADERS)
+     file(GLOB STK_HEADERS "include/*.h")
+-    install(FILES ${STK_HEADERS} DESTINATION include/stk)
++    install(FILES ${STK_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/stk)
+ endif()
+ #========================================#
+ #========== Build the Library ===========#
+@@ -205,3 +206,13 @@ install(TARGETS ${STK_TARGETS} EXPORT stk-config
+ 	PUBLIC_HEADER DESTINATION include/stk)
+ 
+ install(EXPORT stk-config DESTINATION lib/cmake/stk)
++
++configure_file(
++  ${CMAKE_CURRENT_SOURCE_DIR}/share/pkgconfig/stk.pc.in
++  ${CMAKE_CURRENT_BINARY_DIR}/stk.pc
++  @ONLY
++)
++install(
++  FILES ${CMAKE_CURRENT_BINARY_DIR}/stk.pc
++  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++)  
+diff --git a/share/pkgconfig/stk.pc.in b/share/pkgconfig/stk.pc.in
+new file mode 100644
+index 0000000..5583031
+--- /dev/null
++++ b/share/pkgconfig/stk.pc.in
+@@ -0,0 +1,10 @@
++prefix=@CMAKE_INSTALL_PREFIX@
++exec_prefix=${prefix}
++libdir=${prefix}/${CMAKE_INSTALL_LIBDIR}
++includedir=${prefix}/${CMAKE_INSTALL_INCLUDEDIR}/stk
++
++Name: @PROJECT_NAME@
++Description: @PROJECT_DESCRIPTION@
++Version: @PROJECT_VERSION@
++Libs: -L${libdir} -lstk
++Cflags: -I${includedir}
